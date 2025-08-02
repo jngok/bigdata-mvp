@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>빅데이터기술연구원(주) - AI MVP 솔루션</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        @import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/TMONBlackStandardRegular.woff2');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'TMONBlackStandardRegular', 'Noto Sans KR', sans-serif;
+            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0066cc, #004499, #002266, #0088ff);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Main Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Logo Animation */
+        .logo-container {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            animation: logoEntrance 2s ease-out;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #0066cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(0, 102, 204, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .logo-text {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            z-index: 2;
+        }
+
+        @keyframes logoEntrance {
+            0% { opacity: 0; transform: scale(0) rotate(-180deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Main Content */
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            animation: contentSlideUp 2s ease-out 0.5s both;
+        }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            letter-spacing: 2px;
+            animation: fadeInUp 1.5s ease-out 1s both;
+        }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #fff, #87CEEB, #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite, fadeInUp 1.5s ease-out 1.2s both;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1.5s ease-out 1.4s both;
+        }
+
+        .main-message {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #87CEEB;
+            text-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
+            animation: fadeInUp 1.5s ease-out 1.6s both, pulse 2s ease-in-out infinite;
+        }
+
+        .contact-info {
+            font-size: 2rem;
+            font-weight: 500;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            display: inline-block;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1.5s ease-out 1.8s both;
+        }
+
+        .contact-info:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #87CEEB;
+            box-shadow: 0 0 30px rgba(135, 206, 235, 0.3);
+            transform: scale(1.05);
+        }
+
+        @keyframes contentSlideUp {
+            0% { opacity: 0; transform: translateY(100px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* AI Visual Effects */
+        .ai-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .brain-icon {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.1;
+            animation: brainFloat 8s ease-in-out infinite;
+        }
+
+        .brain-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .brain-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .brain-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+        .brain-icon:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 6s; }
+
+        @keyframes brainFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
+        }
+
+        /* Data Flow Animation */
+        .data-flow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .data-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #87CEEB, transparent);
+            animation: dataMove 4s ease-in-out infinite;
+        }
+
+        .data-line:nth-child(1) {
+            top: 20%;
+            width: 200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .data-line:nth-child(2) {
+            top: 60%;
+            width: 150px;
+            right: -150px;
+            animation-delay: 1s;
+            animation-direction: reverse;
+        }
+
+        .data-line:nth-child(3) {
+            top: 80%;
+            width: 300px;
+            left: -300px;
+            animation-delay: 2s;
+        }
+
+        @keyframes dataMove {
+            0% { transform: translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(calc(100vw + 200px)); opacity: 0; }
+        }
+
+        /* Call to Action Button */
+        .cta-section {
+            margin-top: 3rem;
+            animation: fadeInUp 1.5s ease-out 2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(45deg, #0066cc, #0088ff);
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.4);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Consultation Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            position: relative;
+            background: linear-gradient(135deg, #0066cc, #004499);
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.5s ease-out;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .close {
+            color: #fff;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #87CEEB;
+            transform: scale(1.2);
+        }
+
+        .modal h2 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #87CEEB;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.3);
+        }
+
+        .submit-consultation {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(45deg, #87CEEB, #4CAF50);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .submit-consultation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(135, 206, 235, 0.4);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-container {
+                top: 1rem;
+                left: 1rem;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .main-message {
+                font-size: 1.8rem;
+            }
+            
+            .contact-info {
+                font-size: 1.5rem;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+
+        /* Video Background Effect */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0,102,204,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: -1;
+            animation: videoEffect 10s ease-in-out infinite;
+        }
+
+        @keyframes videoEffect {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="video-overlay"></div>
+
+    <!-- Floating Particles -->
+    <div class="particles"></div>
+
+    <!-- AI Visual Elements -->
+    <div class="ai-elements">
+        <div class="brain-icon">🧠</div>
+        <div class="brain-icon">⚡</div>
+        <div class="brain-icon">🔮</div>
+        <div class="brain-icon">💡</div>
+    </div>
+
+    <!-- Data Flow Animation -->
+    <div class="data-flow">
+        <div class="data-line"></div>
+        <div class="data-line"></div>
+        <div class="data-line"></div>
+    </div>
+
+    <!-- Logo -->
+    <div class="logo-container">
+        <div class="logo">
+            <div class="logo-text">B</div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="hero-content">
+            <div class="company-name">빅데이터기술연구원(주)</div>
+            
+            <h1 class="main-title">AI MVP 솔루션</h1>
+            
+            <p class="subtitle">(Minimum Viable Product)</p>
+            
+            <div class="main-message">
+                소비자는 <br>
+                핵심 기능에 반응합니다.
+            </div>
+            
+            <div class="cta-section">
+                <button onclick="openConsultationModal()" class="cta-button">
+                    상담하기
+                </button>
+            </div>
+            
+            <div class="contact-info">
+                📞 010-5234-3535
+            </div>
+        </div>
+    </div>
+
+    <!-- Consultation Modal -->
+    <div id="consultationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeConsultationModal()">&times;</span>
+            <h2>🤖 AI MVP 상담 신청</h2>
+            <form id="consultationForm">
+                <button type="submit" class="submit-consultation" style="margin-bottom: 1.5rem;">
+                    상담 신청하기
+                </button>
+                
+                <div class="form-group">
+                    <label for="consultName">이름 *</label>
+                    <input type="text" id="consultName" name="name" placeholder="이름을 입력해주세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="consultPhone">연락처 *</label>
+                    <input type="tel" id="consultPhone" name="phone" placeholder="010-0000-0000" required>
+                </div>
+                <div class="form-group">
+                    <label for="consultContent">상담 내용 *</label>
+                    <textarea id="consultContent" name="content" rows="3" placeholder="어떤 AI MVP를 개발하고 싶으신지 자세히 알려주세요." required></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Dynamic text animation
+        function animateText() {
+            const mainMessage = document.querySelector('.main-message');
+            const text = mainMessage.textContent;
+            mainMessage.textContent = '';
+            
+            let index = 0;
+            function typeWriter() {
+                if (index < text.length) {
+                    mainMessage.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            
+            setTimeout(typeWriter, 2000);
+        }
+
+        // Interactive mouse effects
+        document.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            particles.forEach((particle, index) => {
+                const speed = (index + 1) * 0.01;
+                const x = mouseX * 50 * speed;
+                const y = mouseY * 50 * speed;
+                particle.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Logo click effect
+        document.querySelector('.logo').addEventListener('click', () => {
+            const logo = document.querySelector('.logo');
+            logo.style.animation = 'none';
+            setTimeout(() => {
+                logo.style.animation = 'logoEntrance 1s ease-out';
+            }, 10);
+        });
+
+        // Phone number click effect
+        document.querySelector('.contact-info').addEventListener('click', () => {
+            window.location.href = 'tel:010-5234-3535';
+        });
+
+        // Enhanced visual effects
+        function createDataPoints() {
+            const aiElements = document.querySelector('.ai-elements');
+            const dataPoints = ['📊', '🎯', '🚀', '💻', '🔬', '📈'];
+            
+            dataPoints.forEach((point, index) => {
+                const element = document.createElement('div');
+                element.textContent = point;
+                element.style.position = 'absolute';
+                element.style.fontSize = '2rem';
+                element.style.opacity = '0.2';
+                element.style.top = Math.random() * 80 + 10 + '%';
+                element.style.left = Math.random() * 80 + 10 + '%';
+                element.style.animation = `brainFloat ${8 + index}s ease-in-out infinite`;
+                element.style.animationDelay = index * 1.5 + 's';
+                aiElements.appendChild(element);
+            });
+        }
+
+        // Consultation Modal Functions
+        function openConsultationModal() {
+            document.getElementById('consultationModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeConsultationModal() {
+            document.getElementById('consultationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('consultationModal');
+            if (event.target === modal) {
+                closeConsultationModal();
+            }
+        }
+
+        // Handle consultation form submission
+        document.getElementById('consultationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('consultName').value;
+            const phone = document.getElementById('consultPhone').value;
+            const content = document.getElementById('consultContent').value;
+            
+            // SMS 메시지 내용 구성
+            const message = `[AI MVP 상담신청]\n이름: ${name}\n연락처: ${phone}\n상담내용: ${content}`;
+            
+            // SMS 발송 (모바일에서 작동)
+            const smsUrl = `sms:010-5234-3535?body=${encodeURIComponent(message)}`;
+            window.location.href = smsUrl;
+            
+            // 성공 메시지
+            alert('상담 신청이 완료되었습니다!\n문자 메시지 앱이 열립니다.');
+            
+            // 폼 초기화 및 모달 닫기
+            this.reset();
+            closeConsultationModal();
+        });
+
+        // Initialize all effects
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            createDataPoints();
+            
+            // Delay text animation to sync with other animations
+            setTimeout(animateText, 1000);
+            
+            // Add click-to-call functionality
+            document.querySelectorAll('[href^="tel:"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Visual feedback
+                    e.target.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        e.target.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        });
+
+        // Scroll effects (if content expands)
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.animated-bg');
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+        });
+
+        // Auto-refresh particles periodically
+        setInterval(() => {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => {
+                particle.style.animationDelay = Math.random() * 6 + 's';
+            });
+        }, 10000);
+    </script>
+</body>
+</html>
