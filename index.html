@@ -11,9 +11,9 @@
         margin: 0;
         font-family: 'Noto Sans KR', sans-serif;
         height: 100vh;
-        background: linear-gradient(270deg, #2b5876, #4e4376);
-        background-size: 400% 400%;
-        animation: gradientShift 12s ease infinite;
+        background: linear-gradient(270deg, #2b5876, #4e4376, #1e3c72, #2a5298);
+        background-size: 800% 800%;
+        animation: gradientShift 15s ease infinite;
         color: #fff;
         display: flex;
         flex-direction: column;
@@ -72,6 +72,7 @@
         padding: 2rem;
     }
 
+    /* 글자 떠오르는 효과 */
     .hero h2 {
         font-size: 3rem;
         font-weight: 900;
@@ -79,8 +80,8 @@
         background: linear-gradient(90deg, #ffffff, #87CEEB, #ffffff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: titleGlow 5s ease-in-out infinite;
-        white-space: nowrap;
+        animation: titleGlow 5s ease-in-out infinite, fadeUp 1.5s ease-out forwards;
+        opacity: 0;
     }
 
     @keyframes titleGlow {
@@ -88,15 +89,24 @@
         50% { background-position: 100% 50%; }
     }
 
+    @keyframes fadeUp {
+        0% { transform: translateY(30px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
     .hero p {
         font-size: 1.3rem;
         opacity: 0.9;
         margin-bottom: 2rem;
+        animation: fadeUp 1.5s ease-out 0.5s forwards;
+        opacity: 0;
     }
 
     .button-group {
         display: flex;
         gap: 10px;
+        animation: fadeUp 1.5s ease-out 1s forwards;
+        opacity: 0;
     }
 
     .cta-button {
@@ -109,6 +119,7 @@
         text-decoration: none;
         backdrop-filter: blur(5px);
         transition: all 0.3s ease;
+        white-space: nowrap;
     }
 
     .cta-button:hover {
@@ -155,8 +166,8 @@
 <header>
     <h1>빅데이터기술연구원(주)</h1>
     <nav>
-        <a href="catalog.html">📂 카탈로그</a>
-        <a href="download.html">⬇ 다운로드</a>
+        <a href="catalog.html">카탈로그</a>
+        <a href="download.html">다운로드</a>
     </nav>
 </header>
 
@@ -164,8 +175,8 @@
     <h2>AI 핵심 솔루션</h2>
     <p>고객은 핵심 기능에 반응합니다</p>
     <div class="button-group">
-        <a href="catalog.html" class="cta-button">📂 카탈로그</a>
-        <a href="download.html" class="cta-button">⬇ 다운로드</a>
+        <a href="catalog.html" class="cta-button">카탈로그</a>
+        <a href="download.html" class="cta-button">다운로드</a>
     </div>
 </div>
 
