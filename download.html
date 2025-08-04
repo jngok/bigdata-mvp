@@ -1,2 +1,511 @@
-요   약
-본 연구는 융합보안 텍스트분류에서 양자컴퓨팅 시뮬레이터 Qiskit Aer의 적용 가능성을 탐색하고, 베이스라인 모델인 KoBERT와 비교분석했다. 융합보안 데이터셋 12,102개를 5개 보안 레벨로 분류하는 실험에서 학습데이터 10,000개, 테스트데이터 2,102개, 배치크기 100, 2에포크 조건으로 평가한 결과, KoBERT가 95.43%, Qiskit Aer가 92.63%의 정확도를 달성하였다. 그러나 동일 정보량 조건(8차원)에서는 Qiskit Aer(91.2%)가 차원 축소된 KoBERT(89.3%)보다 우수한 성능을 보여 양자 알고리즘의 특성 표현 능력을 입증하였다. Qiskit Aer는 8차원 명시적 특성 벡터와 양자 상태 인코딩을 통해 높은 해석 가능성과 학습시간 효율성(4.45배 빠름)을 제공했으며 High 레벨에서 95% 정밀도로 특정 보안 위협 패턴 인식에 강점을 보였다. 본 연구는 양자컴퓨팅 기술이 융합보안 텍스트분류 분야에서 경쟁력 있는 성능을 보일 수 있음을 실증한 탐색적 연구로서 의의가 있다.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다운로드 - 빅데이터기술연구원(주)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 50px;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0066ff, #00d4ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .logo-text::before {
+            content: 'B';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0066ff;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .company-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #00d4ff;
+        }
+
+        .nav-link.active {
+            color: #00d4ff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-title p {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        .download-section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #00d4ff;
+            text-align: center;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .download-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .download-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+        }
+
+        .item-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .item-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-icon i {
+            font-size: 20px;
+            color: white;
+        }
+
+        .item-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .item-info .version {
+            font-size: 0.9rem;
+            color: #00d4ff;
+        }
+
+        .item-description {
+            color: #ccc;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .code-preview {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-preview .comment {
+            color: #00d4ff;
+        }
+
+        .code-preview .keyword {
+            color: #ff6b6b;
+        }
+
+        .code-preview .string {
+            color: #51cf66;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .contact-info {
+            color: white;
+            font-size: 16px;
+        }
+
+        .contact-info i {
+            color: #00d4ff;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .page-title h1 {
+                font-size: 2rem;
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <div class="logo-circle">
+                    <div class="logo-text"></div>
+                </div>
+                <div class="company-name">빅데이터기술연구원(주)</div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">홈</a>
+                <a href="catalog.html" class="nav-link">카탈로그</a>
+                <a href="download.html" class="nav-link active">다운로드</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>다운로드 센터</h1>
+            <p>AI MVP 솔루션 개발을 위한 샘플 코드와 문서를 다운로드하세요</p>
+        </div>
+
+        <!-- 샘플 코드 섹션 -->
+        <div class="download-section">
+            <h2 class="section-title">샘플 코드</h2>
+            <div class="download-grid">
+                <div class="download-item">
+                    <div class="item-header">
+                        <div class="item-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div class="item-info">
+                            <h3>Python 샘플</h3>
+                            <div class="version">v1.0.0</div>
+                        </div>
+                    </div>
+                    <p class="item-description">
+                        AI MVP 개발을 위한 Python 샘플 코드와 예제 프로젝트
+                    </p>
+                    <div class="item-meta">
+                        <span>파일 크기: 2.5MB</span>
+                        <span>다운로드: 1,234</span>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('python-sample.zip')">
+                        <i class="fas fa-download"></i>
+                        다운로드
+                    </button>
+                </div>
+
+                <div class="download-item">
+                    <div class="item-header">
+                        <div class="item-icon">
+                            <i class="fab fa-js"></i>
+                        </div>
+                        <div class="item-info">
+                            <h3>JavaScript 샘플</h3>
+                            <div class="version">v1.0.0</div>
+                        </div>
+                    </div>
+                    <p class="item-description">
+                        웹 기반 AI MVP를 위한 JavaScript/Node.js 샘플 코드
+                    </p>
+                    <div class="item-meta">
+                        <span>파일 크기: 1.8MB</span>
+                        <span>다운로드: 987</span>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('javascript-sample.zip')">
+                        <i class="fas fa-download"></i>
+                        다운로드
+                    </button>
+                </div>
+
+                <div class="download-item">
+                    <div class="item-header">
+                        <div class="item-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="item-info">
+                            <h3>모바일 앱 샘플</h3>
+                            <div class="version">v1.0.0</div>
+                        </div>
+                    </div>
+                    <p class="item-description">
+                        React Native를 활용한 모바일 AI MVP 앱 샘플
+                    </p>
+                    <div class="item-meta">
+                        <span>파일 크기: 3.2MB</span>
+                        <span>다운로드: 756</span>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('mobile-sample.zip')">
+                        <i class="fas fa-download"></i>
+                        다운로드
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문서 섹션 -->
+        <div class="download-section">
+            <h2 class="section-title">문서 및 가이드</h2>
+            <div class="download-grid">
+                <div class="download-item">
+                    <div class="item-header">
+                        <div class="item-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="item-info">
+                            <h3>개발 가이드</h3>
+                            <div class="version">v2.1.0</div>
+                        </div>
+                    </div>
+                    <p class="item-description">
+                        AI MVP 개발을 위한 상세한 기술 가이드와 모범 사례
+                    </p>
+                    <div class="item-meta">
+                        <span>파일 크기: 5.1MB</span>
+                        <span>다운로드: 2,345</span>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('development-guide.pdf')">
+                        <i class="fas fa-download"></i>
+                        다운로드
+                    </button>
+                </div>
+
+                <div class="download-item">
+                    <div class="item-header">
+                        <div class="item-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="item-info">
+                            <h3>API 문서</h3>
+                            <div class="version">v1.5.0</div>
+                        </div>
+                    </div>
+                    <p class="item-description">
+                        AI 서비스 API 사용법과 통합 가이드
+                    </p>
+                    <div class="item-meta">
+                        <span>파일 크기: 2.8MB</span>
+                        <span>다운로드: 1,567</span>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('api-documentation.pdf')">
+                        <i class="fas fa-download"></i>
+                        다운로드
+                    </button>
+                </div>
+
+                <div class="download-item">
+                    <div class="item-header">
+                        <div class="item-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="item-info">
+                            <h3>데모 프로젝트</h3>
+                            <div class="version">v1.0.0</div>
+                        </div>
+                    </div>
+                    <p class="item-description">
+                        실제 작동하는 AI MVP 데모 프로젝트 전체 소스코드
+                    </p>
+                    <div class="item-meta">
+                        <span>파일 크기: 8.5MB</span>
+                        <span>다운로드: 892</span>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('demo-project.zip')">
+                        <i class="fas fa-download"></i>
+                        다운로드
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 코드 프리뷰 -->
+        <div class="download-section">
+            <h2 class="section-title">코드 프리뷰</h2>
+            <div class="code-preview">
+                <div class="comment"># AI MVP 샘플 코드 - 고객은 핵심에 반응합니다</div>
+                <br>
+                <div class="keyword">import</div> <div class="string">datetime</div><br>
+                <div class="keyword">def</div> <div class="string">main</div>():<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<div class="keyword">print</div>(<div class="string">"🚀 BigDT AI MVP 솔루션"</div>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<div class="keyword">print</div>(<div class="string">"💡 핵심 메시지: 고객은 핵심에 반응합니다"</div>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<div class="keyword">print</div>(<div class="string">"📊 서비스: AI 핵심 기능 구현 전문"</div>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<div class="keyword">print</div>(<div class="string">"📞 연락처: 010-5234-3535"</div>)<br>
+                <br>
+                <div class="keyword">if</div> __name__ == <div class="string">"__main__"</div>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;main()
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="contact-info">
+            <i class="fas fa-clock"></i>
+            24시간 상담: 010-5234-3535
+        </div>
+    </footer>
+
+    <script>
+        function downloadFile(filename) {
+            // 실제 다운로드 기능 구현
+            alert(`다운로드가 시작됩니다: ${filename}\n\n실제 구현 시에는 서버에서 파일을 제공합니다.`);
+            
+            // 다운로드 카운트 증가 (실제로는 서버에서 처리)
+            const btn = event.target.closest('.download-btn');
+            const meta = btn.parentElement.querySelector('.item-meta');
+            const downloadCount = meta.querySelector('span:last-child');
+            const currentCount = parseInt(downloadCount.textContent.split(': ')[1]);
+            downloadCount.textContent = `다운로드: ${currentCount + 1}`;
+        }
+
+        // 페이지 로드 시 애니메이션
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.download-item');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 
