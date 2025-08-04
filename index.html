@@ -1,126 +1,188 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>빅데이터기술연구원(주) - AI 핵심 솔루션</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>빅데이터기술연구원(주) - AI 핵심 솔루션</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
 
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(45deg, #3399ff, #66b2ff, #99ccff, #4da6ff);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-            color: #fff;
-            overflow-x: hidden;
-        }
+    body {
+        margin: 0;
+        font-family: 'Noto Sans KR', sans-serif;
+        height: 100vh;
+        background: linear-gradient(270deg, #2b5876, #4e4376);
+        background-size: 400% 400%;
+        animation: gradientShift 12s ease infinite;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
-        .container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            text-align: center;
-        }
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(0,0,0,0.2);
+        backdrop-filter: blur(10px);
+        z-index: 10;
+        transition: background 0.3s ease;
+    }
 
-        .main-title {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #fff, #87CEEB, #fff);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: titleGlow 3s ease-in-out infinite;
-        }
+    header:hover {
+        background: rgba(0,0,0,0.4);
+    }
 
-        @keyframes titleGlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
+    header h1 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0;
+    }
 
-        .right-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 2rem;
-        }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        margin-left: 1rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
 
+    nav a:hover {
+        color: #87CEEB;
+    }
+
+    .hero {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .hero h2 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(90deg, #ffffff, #87CEEB, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: titleGlow 5s ease-in-out infinite;
+        white-space: nowrap;
+    }
+
+    @keyframes titleGlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .cta-button {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.5);
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        text-decoration: none;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+        background: rgba(255,255,255,0.3);
+        border-color: #87CEEB;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+    }
+
+    footer {
+        text-align: center;
+        padding: 1rem;
+        font-size: 1rem;
+        background: rgba(0,0,0,0.3);
+        backdrop-filter: blur(8px);
+    }
+
+    footer a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    footer a:hover {
+        color: #87CEEB;
+    }
+
+    @media (max-width: 480px) {
+        .hero h2 {
+            font-size: 2rem;
+        }
+        .hero p {
+            font-size: 1rem;
+        }
         .cta-button {
-            display: inline-block;
-            padding: 0.8rem 1.8rem;
-            background: linear-gradient(45deg, #0066cc, #0088ff);
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            padding: 0.4rem 1rem;
         }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.4);
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            opacity: 0.9;
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div>
-            <h1 class="main-title">AI 핵심 솔루션</h1>
 
-            <!-- 오른쪽 버튼 -->
-            <div class="right-buttons">
-                <a href="catalog.html" class="cta-button">📂 카탈로그</a>
-                <a href="download.html" class="cta-button">⬇ 다운로드</a>
-            </div>
+<header>
+    <h1>빅데이터기술연구원(주)</h1>
+    <nav>
+        <a href="catalog.html">📂 카탈로그</a>
+        <a href="download.html">⬇ 다운로드</a>
+    </nav>
+</header>
 
-            <p class="subtitle">(Minimum Viable Product)</p>
-        </div>
+<div class="hero">
+    <h2>AI 핵심 솔루션</h2>
+    <p>고객은 핵심 기능에 반응합니다</p>
+    <div class="button-group">
+        <a href="catalog.html" class="cta-button">📂 카탈로그</a>
+        <a href="download.html" class="cta-button">⬇ 다운로드</a>
     </div>
+</div>
 
-    <!-- 스와이프 제스처로 페이지 이동 -->
-    <script>
-        let startX = 0;
-        let endX = 0;
+<footer>
+    MVP 상담: <a href="tel:010-5234-3535">010-5234-3535</a>
+</footer>
 
-        document.addEventListener("touchstart", e => {
-            startX = e.touches[0].clientX;
-        });
+<script>
+let startX = 0, endX = 0;
+document.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+document.addEventListener("touchend", e => {
+    endX = e.changedTouches[0].clientX;
+    let diffX = startX - endX;
+    if (diffX > 50) window.location.href = "catalog.html";
+    else if (diffX < -50) window.location.href = "download.html";
+});
+</script>
 
-        document.addEventListener("touchend", e => {
-            endX = e.changedTouches[0].clientX;
-            let diffX = startX - endX;
-
-            if (diffX > 50) {
-                // 왼쪽으로 스와이프 → 카탈로그 페이지
-                window.location.href = "catalog.html";
-            } else if (diffX < -50) {
-                // 오른쪽으로 스와이프 → 다운로드 페이지
-                window.location.href = "download.html";
-            }
-        });
-    </script>
 </body>
 </html>
