@@ -6,6 +6,8 @@
     <title>빅데이터기술연구원(주) - AI 핵심 기능 구현 전문</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -13,22 +15,23 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
             overflow-x: hidden;
             background: #000;
+            color: #fff;
         }
 
-        /* 동적 배경 */
-        .dynamic-bg {
+        /* Animated Background */
+        .animated-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460, #533483);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
             z-index: -2;
+            background: linear-gradient(45deg, #0066cc, #004499, #002266, #0088ff, #0066cc);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
         }
 
         @keyframes gradientShift {
@@ -39,53 +42,24 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* AI 움직임 효과 */
-        .ai-particles {
+        /* Video Background Effect */
+        .video-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0,102,204,0.1) 0%, rgba(0,0,0,0.3) 100%);
             z-index: -1;
-            overflow: hidden;
+            animation: videoEffect 10s ease-in-out infinite;
         }
 
-        .ai-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #00d4ff;
-            border-radius: 50%;
-            animation: aiFloat 8s infinite;
-            box-shadow: 0 0 10px #00d4ff;
+        @keyframes videoEffect {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
         }
 
-        .ai-particle:nth-child(odd) {
-            background: #ff6b6b;
-            box-shadow: 0 0 10px #ff6b6b;
-            animation-duration: 10s;
-        }
-
-        .ai-particle:nth-child(3n) {
-            background: #4ecdc4;
-            box-shadow: 0 0 10px #4ecdc4;
-            animation-duration: 12s;
-        }
-
-        @keyframes aiFloat {
-            0% { 
-                transform: translateY(100vh) translateX(0) rotate(0deg); 
-                opacity: 0; 
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { 
-                transform: translateY(-100px) translateX(100px) rotate(360deg); 
-                opacity: 0; 
-            }
-        }
-
-        /* 파티클 효과 */
+        /* Floating Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -97,16 +71,92 @@
 
         .particle {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #00d4ff;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
-            animation: float 6s infinite;
+            animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* AI Visual Elements */
+        .ai-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .brain-icon {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.1;
+            animation: brainFloat 8s ease-in-out infinite;
+        }
+
+        .brain-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .brain-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .brain-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+        .brain-icon:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 6s; }
+
+        @keyframes brainFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
             50% { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
+        }
+
+        /* Data Flow Animation */
+        .data-flow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .data-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #87CEEB, transparent);
+            animation: dataMove 4s ease-in-out infinite;
+        }
+
+        .data-line:nth-child(1) {
+            top: 20%;
+            width: 200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .data-line:nth-child(2) {
+            top: 60%;
+            width: 150px;
+            right: -150px;
+            animation-delay: 1s;
+            animation-direction: reverse;
+        }
+
+        .data-line:nth-child(3) {
+            top: 80%;
+            width: 300px;
+            left: -300px;
+            animation-delay: 2s;
+        }
+
+        @keyframes dataMove {
+            0% { transform: translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(calc(100vw + 200px)); opacity: 0; }
         }
 
         /* 헤더 */
@@ -142,11 +192,28 @@
             justify-content: center;
             position: relative;
             animation: logoGlow 3s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        .logo-circle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 3s ease-in-out infinite;
         }
 
         @keyframes logoGlow {
             0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
             50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.8); }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .logo-text {
@@ -155,6 +222,7 @@
             background: white;
             border-radius: 50%;
             position: relative;
+            z-index: 2;
         }
 
         .logo-text::before {
@@ -359,7 +427,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            background: linear-gradient(135deg, #0066cc, #004499);
             padding: 40px;
             border-radius: 20px;
             border: 1px solid rgba(0, 212, 255, 0.3);
@@ -493,14 +561,27 @@
     </style>
 </head>
 <body>
-    <!-- 동적 배경 -->
-    <div class="dynamic-bg"></div>
-    
-    <!-- AI 움직임 효과 -->
-    <div class="ai-particles" id="aiParticles"></div>
-    
-    <!-- 파티클 효과 -->
-    <div class="particles" id="particles"></div>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="video-overlay"></div>
+
+    <!-- Floating Particles -->
+    <div class="particles"></div>
+
+    <!-- AI Visual Elements -->
+    <div class="ai-elements">
+        <div class="brain-icon">��</div>
+        <div class="brain-icon">⚡</div>
+        <div class="brain-icon">��</div>
+        <div class="brain-icon">��</div>
+    </div>
+
+    <!-- Data Flow Animation -->
+    <div class="data-flow">
+        <div class="data-line"></div>
+        <div class="data-line"></div>
+        <div class="data-line"></div>
+    </div>
 
     <!-- 헤더 -->
     <header class="header">
@@ -585,35 +666,38 @@
     </footer>
 
     <script>
-        // AI 파티클 생성
-        function createAIParticles() {
-            const aiParticlesContainer = document.getElementById('aiParticles');
-            const aiParticleCount = 20;
-
-            for (let i = 0; i < aiParticleCount; i++) {
-                const aiParticle = document.createElement('div');
-                aiParticle.className = 'ai-particle';
-                aiParticle.style.left = Math.random() * 100 + '%';
-                aiParticle.style.animationDelay = Math.random() * 8 + 's';
-                aiParticle.style.animationDuration = (Math.random() * 4 + 8) + 's';
-                aiParticlesContainer.appendChild(aiParticle);
-            }
-        }
-
-        // 파티클 생성
+        // Create floating particles
         function createParticles() {
-            const particlesContainer = document.getElementById('particles');
+            const particlesContainer = document.querySelector('.particles');
             const particleCount = 30;
 
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 6 + 's';
                 particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
                 particlesContainer.appendChild(particle);
             }
+        }
+
+        // Create AI data points
+        function createDataPoints() {
+            const aiElements = document.querySelector('.ai-elements');
+            const dataPoints = ['📊', '🎯', '🚀', '💻', '🔬', '📈'];
+            
+            dataPoints.forEach((point, index) => {
+                const element = document.createElement('div');
+                element.textContent = point;
+                element.style.position = 'absolute';
+                element.style.fontSize = '2rem';
+                element.style.opacity = '0.2';
+                element.style.top = Math.random() * 80 + 10 + '%';
+                element.style.left = Math.random() * 80 + 10 + '%';
+                element.style.animation = `brainFloat ${8 + index}s ease-in-out infinite`;
+                element.style.animationDelay = index * 1.5 + 's';
+                aiElements.appendChild(element);
+            });
         }
 
         // 슬라이드 기능
@@ -677,18 +761,40 @@
             this.reset();
         });
 
-        // 페이지 로드 시 파티클 생성
+        // Interactive mouse effects
+        document.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            particles.forEach((particle, index) => {
+                const speed = (index + 1) * 0.01;
+                const x = mouseX * 50 * speed;
+                const y = mouseY * 50 * speed;
+                particle.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // 페이지 로드 시 초기화
         window.addEventListener('load', function() {
-            createAIParticles();
             createParticles();
+            createDataPoints();
         });
 
         // 스크롤 효과
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.dynamic-bg');
+            const parallax = document.querySelector('.animated-bg');
             parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
         });
+
+        // Auto-refresh particles periodically
+        setInterval(() => {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => {
+                particle.style.animationDelay = Math.random() * 6 + 's';
+            });
+        }, 10000);
     </script>
 </body>
 </html>
