@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>빅데이터기술연구원(주) - 카탈로그</title>
+    <title>카탈로그 - 빅데이터기술연구원(주)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
-        @import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/TMONBlackStandardRegular.woff2');
-        
         * {
             margin: 0;
             padding: 0;
@@ -15,693 +13,398 @@
         }
 
         body {
-            font-family: 'TMONBlackStandardRegular', 'Noto Sans KR', sans-serif;
-            overflow-x: hidden;
-            background: #000;
-            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            color: white;
             min-height: 100vh;
         }
 
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #0066cc, #004499, #002266, #0088ff);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Header */
         .header {
-            position: relative;
-            z-index: 100;
-            padding: 2rem;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 50px;
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
         }
 
-        .logo-container {
-            display: inline-flex;
+        .nav {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
-            background: #0066cc;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0066ff, #00d4ff);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 30px rgba(0, 102, 204, 0.5);
         }
 
         .logo-text {
-            font-size: 2rem;
-            font-weight: 900;
-            color: white;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .logo-text::before {
+            content: 'B';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0066ff;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         .company-name {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #87CEEB;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #00d4ff;
+        }
+
+        .nav-link.active {
+            color: #00d4ff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
         }
 
         .page-title {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin: 1rem 0;
-            background: linear-gradient(45deg, #fff, #87CEEB, #fff);
-            background-size: 200% 200%;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: titleGlow 3s ease-in-out infinite;
         }
 
-        @keyframes titleGlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .page-title p {
+            font-size: 1.2rem;
+            color: #ccc;
         }
 
-        /* Navigation */
-        .nav-buttons {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            display: flex;
-            gap: 1rem;
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
         }
 
-        .nav-btn {
-            padding: 0.6rem 1.2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
+        .catalog-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: #87CEEB;
-            transform: scale(1.05);
-        }
-
-        /* Slider Container */
-        .slider-container {
-            position: relative;
-            max-width: 900px;
-            margin: 2rem auto;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        .slider-wrapper {
-            position: relative;
-            width: 100%;
-            height: 600px;
-            overflow: hidden;
+        .catalog-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
         }
 
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+        .item-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 20px;
         }
 
-        .slide.active {
-            opacity: 1;
-        }
-
-        .slide img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 10px;
-        }
-
-        /* Navigation Arrows */
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 102, 204, 0.8);
+        .item-icon i {
+            font-size: 24px;
             color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
+        }
+
+        .item-title {
             font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 10;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #00d4ff;
         }
 
-        .nav-arrow:hover {
-            background: rgba(0, 102, 204, 1);
-            transform: translateY(-50%) scale(1.1);
+        .item-description {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
 
-        .prev-arrow {
-            left: 20px;
+        .item-features {
+            list-style: none;
+            margin-bottom: 20px;
         }
 
-        .next-arrow {
-            right: 20px;
+        .item-features li {
+            padding: 8px 0;
+            color: #ddd;
+            position: relative;
+            padding-left: 25px;
         }
 
-        /* Slide Indicators */
-        .indicators {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .indicator.active {
-            background: #87CEEB;
-            transform: scale(1.2);
-        }
-
-        .indicator:hover {
-            background: rgba(135, 206, 235, 0.7);
-        }
-
-        /* Slide Counter */
-        .slide-counter {
+        .item-features li::before {
+            content: '✓';
             position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
+            left: 0;
+            color: #00d4ff;
+            font-weight: bold;
         }
 
-        /* Controls */
-        .controls {
-            text-align: center;
-            margin: 2rem 0;
+        .item-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00d4ff;
+            margin-bottom: 20px;
         }
 
-        .control-btn {
-            margin: 0 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background: linear-gradient(45deg, #0066cc, #0088ff);
+        .item-btn {
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
             color: white;
             border: none;
-            border-radius: 25px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
-            font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+            width: 100%;
         }
 
-        .control-btn:hover {
+        .item-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
         }
 
-        .control-btn:active {
-            transform: translateY(0);
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
         }
 
-        /* Auto-play indicator */
-        .autoplay-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-left: 1rem;
-            color: #87CEEB;
+        .contact-info {
+            color: white;
+            font-size: 16px;
         }
 
-        .autoplay-dot {
-            width: 8px;
-            height: 8px;
-            background: #87CEEB;
-            border-radius: 50%;
-            animation: pulse 1.5s ease-in-out infinite;
+        .contact-info i {
+            color: #00d4ff;
+            margin-right: 10px;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Loading state */
-        .slide.loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(135, 206, 235, 0.3);
-            border-top: 4px solid #87CEEB;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .slider-container {
-                margin: 1rem;
-                max-width: none;
+            .header {
+                padding: 15px 20px;
             }
 
-            .slider-wrapper {
-                height: 400px;
+            .nav {
+                flex-direction: column;
+                gap: 15px;
             }
 
-            .nav-arrow {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .prev-arrow {
-                left: 10px;
-            }
-
-            .next-arrow {
-                right: 10px;
-            }
-
-            .page-title {
+            .page-title h1 {
                 font-size: 2rem;
             }
 
-            .nav-buttons {
-                position: relative;
-                top: auto;
-                right: auto;
-                justify-content: center;
-                margin-top: 1rem;
+            .catalog-grid {
+                grid-template-columns: 1fr;
             }
-
-            .nav-btn {
-                font-size: 0.8rem;
-                padding: 0.5rem 1rem;
-            }
-        }
-
-        /* Fullscreen mode */
-        .fullscreen-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .fullscreen-btn:hover {
-            background: rgba(0, 102, 204, 0.8);
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg"></div>
-
-    <!-- Header -->
-    <div class="header">
-        <div class="logo-container">
+    <header class="header">
+        <nav class="nav">
             <div class="logo">
-                <div class="logo-text">B</div>
+                <div class="logo-circle">
+                    <div class="logo-text"></div>
+                </div>
+                <div class="company-name">빅데이터기술연구원(주)</div>
             </div>
-            <div class="company-name">빅데이터기술연구원(주)</div>
-        </div>
-        <h1 class="page-title">회사 카탈로그</h1>
-        <p style="opacity: 0.8; font-size: 1.1rem;">AI MVP 솔루션과 연구 성과를 확인하세요</p>
-    </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">홈</a>
+                <a href="catalog.html" class="nav-link active">카탈로그</a>
+                <a href="download.html" class="nav-link">다운로드</a>
+            </div>
+        </nav>
+    </header>
 
-    <!-- Navigation Buttons -->
-    <div class="nav-buttons">
-        <a href="index.html" class="nav-btn">🏠 홈</a>
-        <a href="download.html" class="nav-btn">📁 자료실</a>
-    </div>
-
-    <!-- Slider Container -->
-    <div class="slider-container">
-        <div class="slider-wrapper">
-            <!-- Slide Counter -->
-            <div class="slide-counter">
-                <span id="currentSlide">1</span> / <span id="totalSlides">16</span>
-            </div>
-
-            <!-- Fullscreen Button -->
-            <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
-
-            <!-- Slides -->
-            <div class="slide active loading" data-slide="1">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="2">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="3">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="4">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="5">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="6">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="7">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="8">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="9">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="10">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="11">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="12">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="13">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="14">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="15">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="slide loading" data-slide="16">
-                <div class="loading-spinner"></div>
-            </div>
-
-            <!-- Navigation Arrows -->
-            <button class="nav-arrow prev-arrow" onclick="prevSlide()">‹</button>
-            <button class="nav-arrow next-arrow" onclick="nextSlide()">›</button>
+    <div class="container">
+        <div class="page-title">
+            <h1>AI MVP 솔루션 카탈로그</h1>
+            <p>고객의 핵심 가치를 실현하는 최적의 AI 솔루션</p>
         </div>
 
-        <!-- Indicators -->
-        <div class="indicators">
-            <div class="indicator active" onclick="goToSlide(1)"></div>
-            <div class="indicator" onclick="goToSlide(2)"></div>
-            <div class="indicator" onclick="goToSlide(3)"></div>
-            <div class="indicator" onclick="goToSlide(4)"></div>
-            <div class="indicator" onclick="goToSlide(5)"></div>
-            <div class="indicator" onclick="goToSlide(6)"></div>
-            <div class="indicator" onclick="goToSlide(7)"></div>
-            <div class="indicator" onclick="goToSlide(8)"></div>
-            <div class="indicator" onclick="goToSlide(9)"></div>
-            <div class="indicator" onclick="goToSlide(10)"></div>
-            <div class="indicator" onclick="goToSlide(11)"></div>
-            <div class="indicator" onclick="goToSlide(12)"></div>
-            <div class="indicator" onclick="goToSlide(13)"></div>
-            <div class="indicator" onclick="goToSlide(14)"></div>
-            <div class="indicator" onclick="goToSlide(15)"></div>
-            <div class="indicator" onclick="goToSlide(16)"></div>
+        <div class="catalog-grid">
+            <div class="catalog-item">
+                <div class="item-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="item-title">AI 챗봇 MVP</h3>
+                <p class="item-description">
+                    고객 문의 자동 응답 및 상담 서비스를 위한 AI 챗봇 솔루션
+                </p>
+                <ul class="item-features">
+                    <li>자연어 처리 (NLP)</li>
+                    <li>24시간 자동 응답</li>
+                    <li>다국어 지원</li>
+                    <li>고객 데이터 분석</li>
+                    <li>쉬운 관리 인터페이스</li>
+                </ul>
+                <div class="item-price">₩2,000,000 ~</div>
+                <button class="item-btn">상담 신청</button>
+            </div>
+
+            <div class="catalog-item">
+                <div class="item-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="item-title">데이터 분석 MVP</h3>
+                <p class="item-description">
+                    비즈니스 데이터를 실시간으로 분석하고 인사이트를 제공
+                </p>
+                <ul class="item-features">
+                    <li>실시간 데이터 시각화</li>
+                    <li>예측 분석</li>
+                    <li>대시보드 제공</li>
+                    <li>API 연동</li>
+                    <li>모바일 지원</li>
+                </ul>
+                <div class="item-price">₩3,500,000 ~</div>
+                <button class="item-btn">상담 신청</button>
+            </div>
+
+            <div class="catalog-item">
+                <div class="item-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3 class="item-title">추천 시스템 MVP</h3>
+                <p class="item-description">
+                    개인화된 상품 추천으로 매출 증대를 위한 AI 솔루션
+                </p>
+                <ul class="item-features">
+                    <li>개인화 추천</li>
+                    <li>실시간 학습</li>
+                    <li>A/B 테스트</li>
+                    <li>성과 분석</li>
+                    <li>쉬운 통합</li>
+                </ul>
+                <div class="item-price">₩4,000,000 ~</div>
+                <button class="item-btn">상담 신청</button>
+            </div>
+
+            <div class="catalog-item">
+                <div class="item-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="item-title">이미지 인식 MVP</h3>
+                <p class="item-description">
+                    이미지 분석 및 자동 태깅을 위한 컴퓨터 비전 솔루션
+                </p>
+                <ul class="item-features">
+                    <li>객체 인식</li>
+                    <li>얼굴 인식</li>
+                    <li>자동 태깅</li>
+                    <li>품질 검사</li>
+                    <li>고속 처리</li>
+                </ul>
+                <div class="item-price">₩5,000,000 ~</div>
+                <button class="item-btn">상담 신청</button>
+            </div>
+
+            <div class="catalog-item">
+                <div class="item-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h3 class="item-title">번역 서비스 MVP</h3>
+                <p class="item-description">
+                    다국어 지원을 위한 실시간 번역 및 언어 처리 솔루션
+                </p>
+                <ul class="item-features">
+                    <li>실시간 번역</li>
+                    <li>다국어 지원</li>
+                    <li>음성 인식</li>
+                    <li>문맥 이해</li>
+                    <li>API 제공</li>
+                </ul>
+                <div class="item-price">₩3,000,000 ~</div>
+                <button class="item-btn">상담 신청</button>
+            </div>
+
+            <div class="catalog-item">
+                <div class="item-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="item-title">커스텀 AI MVP</h3>
+                <p class="item-description">
+                    고객의 특별한 요구사항에 맞춘 맞춤형 AI 솔루션 개발
+                </p>
+                <ul class="item-features">
+                    <li>맞춤형 개발</li>
+                    <li>전문 컨설팅</li>
+                    <li>유지보수</li>
+                    <li>교육 제공</li>
+                    <li>지속 지원</li>
+                </ul>
+                <div class="item-price">문의</div>
+                <button class="item-btn">상담 신청</button>
+            </div>
         </div>
     </div>
 
-    <!-- Controls -->
-    <div class="controls">
-        <button class="control-btn" onclick="toggleAutoplay()">
-            <span id="autoplayText">자동 재생 시작</span>
-        </button>
-        <button class="control-btn" onclick="resetSlider()">처음으로</button>
-        
-        <div class="autoplay-indicator" id="autoplayIndicator" style="display: none;">
-            <div class="autoplay-dot"></div>
-            <span>자동 재생 중</span>
+    <footer class="footer">
+        <div class="contact-info">
+            <i class="fas fa-clock"></i>
+            24시간 상담: 010-5234-3535
         </div>
-    </div>
+    </footer>
 
     <script>
-        let currentSlideIndex = 1;
-        let isAutoplay = false;
-        let autoplayInterval;
-        const totalSlides = 16;
-        
-        // Image paths - 실제 이미지 경로로 변경해야 합니다
-        const imagePaths = [
-            'files/catalog/slide1.jpg',
-            'files/catalog/slide2.jpg',
-            'files/catalog/slide3.jpg',
-            'files/catalog/slide4.jpg',
-            'files/catalog/slide5.jpg',
-            'files/catalog/slide6.jpg',
-            'files/catalog/slide7.jpg',
-            'files/catalog/slide8.jpg',
-            'files/catalog/slide9.jpg',
-            'files/catalog/slide10.jpg',
-            'files/catalog/slide11.jpg',
-            'files/catalog/slide12.jpg',
-            'files/catalog/slide13.jpg',
-            'files/catalog/slide14.jpg',
-            'files/catalog/slide15.jpg',
-            'files/catalog/slide16.jpg'
-        ];
-
-        // Initialize slider
-        function initSlider() {
-            loadImages();
-            updateSlideCounter();
-        }
-
-        // Load images
-        function loadImages() {
-            imagePaths.forEach((path, index) => {
-                const slide = document.querySelector(`[data-slide="${index + 1}"]`);
-                const img = new Image();
-                
-                img.onload = function() {
-                    slide.innerHTML = '';
-                    slide.appendChild(img);
-                    slide.classList.remove('loading');
-                };
-                
-                img.onerror = function() {
-                    slide.innerHTML = `
-                        <div style="text-align: center; color: #87CEEB;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">📷</div>
-                            <div style="font-size: 1.2rem;">이미지 ${index + 1}</div>
-                            <div style="font-size: 0.9rem; opacity: 0.7; margin-top: 0.5rem;">
-                                카탈로그 페이지 ${index + 1}
-                            </div>
-                        </div>
-                    `;
-                    slide.classList.remove('loading');
-                };
-                
-                img.src = path;
+        // 상담 신청 버튼 이벤트
+        document.querySelectorAll('.item-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.');
             });
-        }
-
-        // Navigation functions
-        function nextSlide() {
-            goToSlide(currentSlideIndex < totalSlides ? currentSlideIndex + 1 : 1);
-        }
-
-        function prevSlide() {
-            goToSlide(currentSlideIndex > 1 ? currentSlideIndex - 1 : totalSlides);
-        }
-
-        function goToSlide(slideNumber) {
-            // Remove active class from current slide and indicator
-            document.querySelector('.slide.active').classList.remove('active');
-            document.querySelector('.indicator.active').classList.remove('active');
-            
-            // Add active class to new slide and indicator
-            document.querySelector(`[data-slide="${slideNumber}"]`).classList.add('active');
-            document.querySelectorAll('.indicator')[slideNumber - 1].classList.add('active');
-            
-            currentSlideIndex = slideNumber;
-            updateSlideCounter();
-        }
-
-        function updateSlideCounter() {
-            document.getElementById('currentSlide').textContent = currentSlideIndex;
-            document.getElementById('totalSlides').textContent = totalSlides;
-        }
-
-        // Autoplay functions
-        function toggleAutoplay() {
-            if (isAutoplay) {
-                stopAutoplay();
-            } else {
-                startAutoplay();
-            }
-        }
-
-        function startAutoplay() {
-            isAutoplay = true;
-            document.getElementById('autoplayText').textContent = '자동 재생 중지';
-            document.getElementById('autoplayIndicator').style.display = 'inline-flex';
-            
-            autoplayInterval = setInterval(() => {
-                nextSlide();
-            }, 3000);
-        }
-
-        function stopAutoplay() {
-            isAutoplay = false;
-            document.getElementById('autoplayText').textContent = '자동 재생 시작';
-            document.getElementById('autoplayIndicator').style.display = 'none';
-            
-            if (autoplayInterval) {
-                clearInterval(autoplayInterval);
-            }
-        }
-
-        function resetSlider() {
-            stopAutoplay();
-            goToSlide(1);
-        }
-
-        // Fullscreen function
-        function toggleFullscreen() {
-            const container = document.querySelector('.slider-container');
-            
-            if (!document.fullscreenElement) {
-                container.requestFullscreen().catch(err => {
-                    console.log('Fullscreen not supported');
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            switch(e.key) {
-                case 'ArrowLeft':
-                    prevSlide();
-                    break;
-                case 'ArrowRight':
-                    nextSlide();
-                    break;
-                case ' ':
-                    e.preventDefault();
-                    toggleAutoplay();
-                    break;
-                case 'Escape':
-                    stopAutoplay();
-                    break;
-                case 'Home':
-                    goToSlide(1);
-                    break;
-                case 'End':
-                    goToSlide(totalSlides);
-                    break;
-            }
-        });
-
-        // Touch/swipe support for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextSlide();
-                } else {
-                    prevSlide();
-                }
-            }
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', initSlider);
-
-        // Pause autoplay when page is not visible
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && isAutoplay) {
-                clearInterval(autoplayInterval);
-            } else if (!document.hidden && isAutoplay) {
-                startAutoplay();
-            }
         });
     </script>
 </body>
-</html>
+</html> 
