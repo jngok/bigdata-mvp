@@ -32,7 +32,7 @@
         width: 100%;
         padding: 1rem 2rem;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         background: rgba(0,0,0,0.2);
         backdrop-filter: blur(10px);
@@ -40,26 +40,10 @@
         transition: background 0.3s ease;
     }
 
-    header:hover {
-        background: rgba(0,0,0,0.4);
-    }
-
     header h1 {
         font-size: 1.2rem;
         font-weight: 700;
         margin: 0;
-    }
-
-    nav a {
-        color: #fff;
-        text-decoration: none;
-        margin-left: 1rem;
-        font-weight: 500;
-        transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-        color: #87CEEB;
     }
 
     .hero {
@@ -70,6 +54,11 @@
         justify-content: center;
         text-align: center;
         padding: 2rem;
+    }
+
+    /* 밑줄 제거 */
+    .hero h2, .hero p {
+        text-decoration: none;
     }
 
     /* 글자 떠오르는 효과 */
@@ -92,6 +81,16 @@
     @keyframes fadeUp {
         0% { transform: translateY(30px); opacity: 0; }
         100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* 핵심 반짝임 효과 */
+    @keyframes shine {
+        0% { color: #87CEEB; text-shadow: 0 0 5px #87CEEB; }
+        50% { color: #ffffff; text-shadow: 0 0 15px #87CEEB, 0 0 25px #87CEEB; }
+        100% { color: #87CEEB; text-shadow: 0 0 5px #87CEEB; }
+    }
+    .hero h2 span {
+        animation: shine 2s infinite;
     }
 
     .hero p {
@@ -165,11 +164,10 @@
 
 <header>
     <h1>빅데이터기술연구원(주)</h1>
-   
 </header>
 
 <div class="hero">
-    <h2>AI 핵심 솔루션</h2>
+    <h2>AI <span>핵심</span> 솔루션</h2>
     <p>고객은 핵심 기능에 반응합니다</p>
     <div class="button-group">
         <a href="catalog.html" class="cta-button">카탈로그</a>
