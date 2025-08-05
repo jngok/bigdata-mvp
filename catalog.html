@@ -6,405 +6,255 @@
     <title>카탈로그 - 빅데이터기술연구원(주)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
             color: white;
             min-height: 100vh;
         }
-
         .header {
             background: rgba(0, 0, 0, 0.9);
             padding: 20px 50px;
-            backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 212, 255, 0.3);
         }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
+        .nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { display: flex; align-items: center; gap: 15px; }
         .logo-circle {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             background: linear-gradient(135deg, #0066ff, #00d4ff);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
-
         .logo-text {
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 50%;
-            position: relative;
+            width: 24px; height: 24px; background: white; border-radius: 50%; position: relative;
         }
-
         .logo-text::before {
-            content: 'B';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #0066ff;
-            font-weight: bold;
-            font-size: 14px;
+            content: 'B'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); color: #0066ff; font-weight: bold; font-size: 14px;
         }
+        .company-name { font-size: 20px; font-weight: bold; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-link { color: white; text-decoration: none; font-weight: 500; }
+        .nav-link:hover, .nav-link.active { color: #00d4ff; }
 
-        .company-name {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #00d4ff;
-        }
-
-        .nav-link.active {
-            color: #00d4ff;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        .page-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; }
+        .page-title { text-align: center; margin-bottom: 50px; }
         .page-title h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 3rem; margin-bottom: 20px;
             background: linear-gradient(135deg, #00d4ff, #0066ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+        .page-title p { font-size: 1.2rem; color: #ccc; }
 
-        .page-title p {
-            font-size: 1.2rem;
-            color: #ccc;
-        }
-
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
         .catalog-item {
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            border-radius: 15px; padding: 30px;
+            transition: all 0.3s ease; backdrop-filter: blur(10px);
         }
-
         .catalog-item:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
             border-color: #00d4ff;
         }
-
         .item-icon {
-            width: 60px;
-            height: 60px;
+            width: 60px; height: 60px;
             background: linear-gradient(135deg, #00d4ff, #0066ff);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 15px; display: flex; align-items: center; justify-content: center;
             margin-bottom: 20px;
         }
+        .item-icon i { font-size: 24px; color: white; }
+        .item-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #00d4ff; }
+        .item-description { color: #ccc; line-height: 1.6; margin-bottom: 20px; }
 
-        .item-icon i {
-            font-size: 24px;
-            color: white;
+        .feature-list { list-style: none; padding: 0; margin: 0; }
+        .feature-list li {
+            position: relative; padding-left: 25px;
+            margin-bottom: 8px; font-size: 14px; color: #ddd;
         }
-
-        .item-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #00d4ff;
-        }
-
-        .item-description {
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .item-features {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-
-        .item-features li {
-            padding: 8px 0;
-            color: #ddd;
-            position: relative;
-            padding-left: 25px;
-        }
-
-        .item-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #00d4ff;
-            font-weight: bold;
-        }
-
-        .item-price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #00d4ff;
-            margin-bottom: 20px;
-        }
-
-        .item-btn {
-            background: linear-gradient(135deg, #00d4ff, #0066ff);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .item-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        .feature-list li::before {
+            content: "✓";
+            position: absolute; left: 0; color: #00d4ff; font-weight: bold;
         }
 
         .footer {
             background: rgba(0, 0, 0, 0.9);
-            padding: 20px 0;
-            text-align: center;
+            padding: 20px 0; text-align: center;
             border-top: 1px solid rgba(0, 212, 255, 0.3);
         }
-
-        .contact-info {
-            color: white;
-            font-size: 16px;
-        }
-
-        .contact-info i {
-            color: #00d4ff;
-            margin-right: 10px;
-        }
+        .contact-info { color: white; font-size: 16px; }
+        .contact-info i { color: #00d4ff; margin-right: 10px; }
 
         @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-            }
-
-            .nav {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .page-title h1 {
-                font-size: 2rem;
-            }
-
-            .catalog-grid {
-                grid-template-columns: 1fr;
-            }
+            .header { padding: 15px 20px; }
+            .nav { flex-direction: column; gap: 15px; }
+            .page-title h1 { font-size: 2rem; }
+            .catalog-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <div class="logo">
-                <div class="logo-circle">
-                    <div class="logo-text"></div>
-                </div>
-                <div class="company-name">빅데이터기술연구원(주)</div>
-            </div>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">홈</a>
-                <a href="catalog.html" class="nav-link active">카탈로그</a>
-                <a href="download.html" class="nav-link">다운로드</a>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <div class="page-title">
-            <h1>AI MVP 솔루션 카탈로그</h1>
-            <p>고객의 핵심 가치를 실현하는 최적의 AI 솔루션</p>
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <div class="logo-circle"><div class="logo-text"></div></div>
+            <div class="company-name">빅데이터기술연구원(주)</div>
         </div>
-
-        <div class="catalog-grid">
-            <div class="catalog-item">
-                <div class="item-icon">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <h3 class="item-title">AI 챗봇 MVP</h3>
-                <p class="item-description">
-                    고객 문의 자동 응답 및 상담 서비스를 위한 AI 챗봇 솔루션
-                </p>
-                <ul class="item-features">
-                    <li>자연어 처리 (NLP)</li>
-                    <li>24시간 자동 응답</li>
-                    <li>다국어 지원</li>
-                    <li>고객 데이터 분석</li>
-                    <li>쉬운 관리 인터페이스</li>
-                </ul>
-                <div class="item-price">₩2,000,000 ~</div>
-                <button class="item-btn">상담 신청</button>
-            </div>
-
-            <div class="catalog-item">
-                <div class="item-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 class="item-title">데이터 분석 MVP</h3>
-                <p class="item-description">
-                    비즈니스 데이터를 실시간으로 분석하고 인사이트를 제공
-                </p>
-                <ul class="item-features">
-                    <li>실시간 데이터 시각화</li>
-                    <li>예측 분석</li>
-                    <li>대시보드 제공</li>
-                    <li>API 연동</li>
-                    <li>모바일 지원</li>
-                </ul>
-                <div class="item-price">₩3,500,000 ~</div>
-                <button class="item-btn">상담 신청</button>
-            </div>
-
-            <div class="catalog-item">
-                <div class="item-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                </div>
-                <h3 class="item-title">추천 시스템 MVP</h3>
-                <p class="item-description">
-                    개인화된 상품 추천으로 매출 증대를 위한 AI 솔루션
-                </p>
-                <ul class="item-features">
-                    <li>개인화 추천</li>
-                    <li>실시간 학습</li>
-                    <li>A/B 테스트</li>
-                    <li>성과 분석</li>
-                    <li>쉬운 통합</li>
-                </ul>
-                <div class="item-price">₩4,000,000 ~</div>
-                <button class="item-btn">상담 신청</button>
-            </div>
-
-            <div class="catalog-item">
-                <div class="item-icon">
-                    <i class="fas fa-image"></i>
-                </div>
-                <h3 class="item-title">이미지 인식 MVP</h3>
-                <p class="item-description">
-                    이미지 분석 및 자동 태깅을 위한 컴퓨터 비전 솔루션
-                </p>
-                <ul class="item-features">
-                    <li>객체 인식</li>
-                    <li>얼굴 인식</li>
-                    <li>자동 태깅</li>
-                    <li>품질 검사</li>
-                    <li>고속 처리</li>
-                </ul>
-                <div class="item-price">₩5,000,000 ~</div>
-                <button class="item-btn">상담 신청</button>
-            </div>
-
-            <div class="catalog-item">
-                <div class="item-icon">
-                    <i class="fas fa-language"></i>
-                </div>
-                <h3 class="item-title">번역 서비스 MVP</h3>
-                <p class="item-description">
-                    다국어 지원을 위한 실시간 번역 및 언어 처리 솔루션
-                </p>
-                <ul class="item-features">
-                    <li>실시간 번역</li>
-                    <li>다국어 지원</li>
-                    <li>음성 인식</li>
-                    <li>문맥 이해</li>
-                    <li>API 제공</li>
-                </ul>
-                <div class="item-price">₩3,000,000 ~</div>
-                <button class="item-btn">상담 신청</button>
-            </div>
-
-            <div class="catalog-item">
-                <div class="item-icon">
-                    <i class="fas fa-cogs"></i>
-                </div>
-                <h3 class="item-title">커스텀 AI MVP</h3>
-                <p class="item-description">
-                    고객의 특별한 요구사항에 맞춘 맞춤형 AI 솔루션 개발
-                </p>
-                <ul class="item-features">
-                    <li>맞춤형 개발</li>
-                    <li>전문 컨설팅</li>
-                    <li>유지보수</li>
-                    <li>교육 제공</li>
-                    <li>지속 지원</li>
-                </ul>
-                <div class="item-price">문의</div>
-                <button class="item-btn">상담 신청</button>
-            </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">홈</a>
+            <a href="catalog.html" class="nav-link active">카탈로그</a>
+            <a href="download.html" class="nav-link">다운로드</a>
         </div>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="page-title">
+        <h1>AI MVP (Minimum Viable Product)</h1>
+        <p>최소 기능 구현 MVP AI 솔루션</p>
     </div>
 
-    <footer class="footer">
-        <div class="contact-info">
-            <i class="fas fa-clock"></i>
-            24시간 상담: 010-5234-3535
+    <div class="catalog-grid">
+        <!-- AI 챗봇 MVP -->
+        <div class="catalog-item">
+            <div class="item-icon"><i class="fas fa-robot"></i></div>
+            <h3 class="item-title">AI 챗봇 MVP</h3>
+            <p class="item-description">고객 문의 자동 응답 및 상담 서비스를 위한 AI 챗봇 솔루션</p>
+            <ul class="feature-list">
+                <li>자연어 처리 (NLP)</li>
+                <li>24시간 자동 응답</li>
+                <li>다국어 지원</li>
+                <li>고객 데이터 분석</li>
+                <li>쉬운 관리 인터페이스</li>
+                <li>사용자 맞춤형 추천 기능</li>
+                <li>음성 인식 및 응답 기능</li>
+                <li>실시간 데이터 시각화</li>
+                <li>예측 분석</li>
+                <li>대시보드 제공</li>
+                <li>API 연동</li>
+                <li>모바일 지원</li>
+                <li>보안 및 개인정보 보호</li>
+            </ul>
         </div>
-    </footer>
 
-    <script>
-        // 상담 신청 버튼 이벤트
-        document.querySelectorAll('.item-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                alert('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.');
-            });
-        });
-    </script>
+        <!-- 데이터 분석 MVP -->
+        <div class="catalog-item">
+            <div class="item-icon"><i class="fas fa-chart-line"></i></div>
+            <h3 class="item-title">데이터 분석 MVP</h3>
+            <p class="item-description">비즈니스 데이터를 실시간으로 분석하고 인사이트를 제공하는 AI 솔루션</p>
+            <ul class="feature-list">
+                <li>실시간 데이터 시각화</li>
+                <li>예측 분석</li>
+                <li>대시보드 제공</li>
+                <li>API 연동</li>
+                <li>모바일 지원</li>
+                <li>개인화 추천</li>
+                <li>실시간 학습</li>
+                <li>A/B 테스트</li>
+                <li>성과 분석</li>
+                <li>쉬운 통합</li>
+                <li>고객 세분화 분석</li>
+                <li>이상 탐지</li>
+                <li>보고서 자동 생성</li>
+            </ul>
+        </div>
+
+        <!-- 추천 시스템 MVP -->
+        <div class="catalog-item">
+            <div class="item-icon"><i class="fas fa-shopping-cart"></i></div>
+            <h3 class="item-title">추천 시스템 MVP</h3>
+            <p class="item-description">개인화된 상품 추천으로 매출 증대를 위한 AI 솔루션</p>
+            <ul class="feature-list">
+                <li>실시간 데이터 시각화</li>
+                <li>예측 분석</li>
+                <li>대시보드 제공</li>
+                <li>API 연동</li>
+                <li>모바일 지원</li>
+                <li>개인화 추천</li>
+                <li>실시간 학습</li>
+                <li>A/B 테스트</li>
+                <li>성과 분석</li>
+                <li>쉬운 통합</li>
+                <li>고객 세분화 분석</li>
+                <li>이상 탐지</li>
+                <li>보고서 자동 생성</li>
+            </ul>
+        </div>
+
+        <!-- 이미지 인식 MVP -->
+        <div class="catalog-item">
+            <div class="item-icon"><i class="fas fa-image"></i></div>
+            <h3 class="item-title">이미지 인식 MVP</h3>
+            <p class="item-description">이미지 분석 및 자동 태깅을 위한 컴퓨터 비전 AI 솔루션</p>
+            <ul class="feature-list">
+                <li>객체 인식</li>
+                <li>얼굴 인식</li>
+                <li>자동 태깅</li>
+                <li>품질 검사</li>
+                <li>고속 처리</li>
+                <li>텍스트 추출 (OCR)</li>
+                <li>색상 분석</li>
+                <li>패턴 인식</li>
+                <li>이미지 유사도 검색</li>
+                <li>결함 감지</li>
+                <li>이미지 분류</li>
+                <li>배경 제거</li>
+                <li>실시간 영상 분석</li>
+            </ul>
+        </div>
+
+        <!-- 번역 서비스 MVP -->
+        <div class="catalog-item">
+            <div class="item-icon"><i class="fas fa-language"></i></div>
+            <h3 class="item-title">번역 서비스 MVP</h3>
+            <p class="item-description">다국어 지원을 위한 실시간 번역 및 언어 처리 AI 솔루션</p>
+            <ul class="feature-list">
+                <li>실시간 번역</li>
+                <li>다국어 지원</li>
+                <li>음성 인식</li>
+                <li>문맥 이해</li>
+                <li>API 제공</li>
+                <li>자동 언어 감지</li>
+                <li>오프라인 번역</li>
+                <li>문서 번역</li>
+                <li>이미지 속 텍스트 번역</li>
+                <li>전문 용어집 지원</li>
+                <li>사용자 맞춤 번역 스타일</li>
+                <li>채팅/메시지 번역</li>
+                <li>실시간 회의 번역</li>
+            </ul>
+        </div>
+
+        <!-- 커스텀 AI MVP -->
+        <div class="catalog-item">
+            <div class="item-icon"><i class="fas fa-cogs"></i></div>
+            <h3 class="item-title">커스텀 AI MVP</h3>
+            <p class="item-description">고객의 특별한 요구사항에 맞춘 맞춤형 AI 솔루션</p>
+            <ul class="feature-list">
+                <li>맞춤형 개발</li>
+                <li>전문 컨설팅</li>
+                <li>유지보수</li>
+                <li>교육 제공</li>
+                <li>지속 지원</li>
+                <li>요구사항 분석</li>
+                <li>프로토타입 제작</li>
+                <li>성능 최적화</li>
+                <li>보안 강화</li>
+                <li>API 및 시스템 통합</li>
+                <li>멀티 플랫폼 지원</li>
+                <li>기능 확장성 보장</li>
+                <li>운영 모니터링</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="contact-info">
+        <i class="fas fa-clock"></i>
+        전문가 상담: 010-5234-3535
+    </div>
+</footer>
 </body>
-</html> 
+</html>
