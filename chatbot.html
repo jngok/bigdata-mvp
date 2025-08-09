@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>재난안전 챗봇 - BigDT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .evaluation-banner {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .chat-container {
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e9ecef;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .user-avatar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .bot-avatar {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+
+        /* 평가 패널 */
+        .evaluation-panel {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .evaluation-panel.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .evaluation-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .rating-section {
+            margin-bottom: 15px;
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: #856404;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .rating-btn {
+            background: white;
+            border: 2px solid #ffeaa7;
+            border-radius: 25px;
+            padding: 8px 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #856404;
+            font-weight: 500;
+        }
+
+        .rating-btn:hover {
+            background: #ffeaa7;
+            transform: translateY(-1px);
+        }
+
+        .rating-btn.selected {
+            background: #f39c12;
+            color: white;
+            border-color: #f39c12;
+        }
+
+        .comment-section {
+            margin-bottom: 15px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffeaa7;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 60px;
+            outline: none;
+        }
+
+        .comment-input:focus {
+            border-color: #f39c12;
+        }
+
+        .evaluation-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .eval-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .submit-eval {
+            background: #28a745;
+            color: white;
+        }
+
+        .submit-eval:hover {
+            background: #218838;
+        }
+
+        .skip-eval {
+            background: #6c757d;
+            color: white;
+        }
+
+        .skip-eval:hover {
+            background: #545b62;
+        }
+
+        .input-container {
+            padding: 25px 20px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            min-height: 120px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: #fffef0;
+            padding: 15px;
+            border-radius: 20px;
+            border: 2px solid #f9f7e8;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #f0eca3;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+            background: #fffff8;
+            height: 50px;
+        }
+
+        .chat-input:focus {
+            border-color: #e6d932;
+            background: #fffff5;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 10px 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .typing-dots {
+            display: inline-block;
+        }
+
+        .typing-dots::after {
+            content: '...';
+            animation: typing 1.5s infinite;
+        }
+
+        @keyframes typing {
+            0%, 60% { content: '...'; }
+            30% { content: '..'; }
+            90% { content: '.'; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            transition: background 0.3s ease;
+        }
+
+        .home-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .stats-panel {
+            background: rgba(40, 167, 69, 0.1);
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #155724;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .chat-container {
+                height: 350px;
+            }
+
+            .input-container {
+                padding: 20px 15px;
+                min-height: 100px;
+            }
+
+            .input-wrapper {
+                padding: 12px;
+            }
+
+            .chat-input {
+                padding: 12px 15px;
+                height: 45px;
+            }
+
+            .send-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .rating-buttons {
+                gap: 5px;
+            }
+
+            .rating-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-link">← 홈으로</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🚨 재난안전 챗봇</h1>
+            <p>국내 법령 데이터 구조보존 임베딩과 RAG 기반<br>재난안전 챗봇 개발 및 성능 평가</p>
+        </div>
+
+        <div class="evaluation-banner">
+            📊 연구용 평가 시스템 | 답변 품질 평가에 참여해주세요 | 평가 데이터는 논문 연구에 활용됩니다
+        </div>
+
+        <div class="stats-panel" id="statsPanel">
+            💡 평가 참여 현황: 총 <span id="totalEvals">0</span>건 | 평균 만족도: <span id="avgRating">0.0</span>/5.0
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="avatar bot-avatar">🤖</div>
+                    <div class="message-content">
+                        안녕하세요! 재난안전 챗봇입니다. 🚨<br><br>
+                        저는 국내 법령 데이터를 기반으로 재난 및 안전 관련 질문에 답변해드립니다.<br><br>
+                        <strong>질문 예시:</strong><br>
+                        • 지진 발생시 행동요령은?<br>
+                        • 화재 시 대피 방법<br>
+                        • 태풍 대비 안전수칙<br>
+                        • 응급상황 신고 방법<br><br>
+                        <em>💡 답변 후 평가에 참여해주시면 연구에 큰 도움이 됩니다!</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                🤖 챗봇이 답변을 준비하고 있습니다<span class="typing-dots"></span>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input type="text" 
+                           class="chat-input" 
+                           id="chatInput" 
+                           placeholder="재난안전 관련 질문을 입력하세요..." 
+                           maxlength="500">
+                    <button class="send-btn" id="sendBtn">📤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class DisasterSafetyChatbot {
+            constructor() {
+                this.chatMessages = document.getElementById('chatMessages');
+                this.chatInput = document.getElementById('chatInput');
+                this.sendBtn = document.getElementById('sendBtn');
+                this.typingIndicator = document.getElementById('typingIndicator');
+                this.totalEvals = parseInt(localStorage.getItem('totalEvals') || '0');
+                this.totalRating = parseInt(localStorage.getItem('totalRating') || '0');
+                
+                this.init();
+                this.updateStats();
+            }
+
+            init() {
+                this.sendBtn.addEventListener('click', () => this.sendMessage());
+                this.chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.sendMessage();
+                });
+            }
+
+            updateStats() {
+                document.getElementById('totalEvals').textContent = this.totalEvals;
+                const avgRating = this.totalEvals > 0 ? (this.totalRating / this.totalEvals).toFixed(1) : '0.0';
+                document.getElementById('avgRating').textContent = avgRating;
+            }
+
+            async sendMessage() {
+                const message = this.chatInput.value.trim();
+                if (!message) return;
+
+                const userMessageId = 'user_' + Date.now();
+                this.addMessage(message, 'user', userMessageId);
+                this.chatInput.value = '';
+                this.sendBtn.disabled = true;
+
+                this.showTyping();
+                await this.simulateResponse(message, userMessageId);
+            }
+
+            addMessage(content, sender, messageId = null) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                if (messageId) messageDiv.setAttribute('data-message-id', messageId);
+                
+                const avatar = document.createElement('div');
+                avatar.className = `avatar ${sender}-avatar`;
+                avatar.textContent = sender === 'user' ? '👤' : '🤖';
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                contentDiv.innerHTML = content;
+                
+                if (sender === 'user') {
+                    messageDiv.appendChild(contentDiv);
+                    messageDiv.appendChild(avatar);
+                } else {
+                    messageDiv.appendChild(avatar);
+                    messageDiv.appendChild(contentDiv);
+                }
+                
+                this.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+
+                return messageDiv;
+            }
+
+            addEvaluationPanel(botMessageDiv, userQuestion, botResponse) {
+                const evalPanel = document.createElement('div');
+                evalPanel.className = 'evaluation-panel';
+                evalPanel.innerHTML = `
+                    <div class="evaluation-title">💬 이 답변을 평가해주세요</div>
+                    
+                    <div class="rating-section">
+                        <div class="rating-label">정확성 (정보의 정확도)</div>
+                        <div class="rating-buttons" data-category="accuracy">
+                            <button class="rating-btn" data-score="1">1점</button>
+                            <button class="rating-btn" data-score="2">2점</button>
+                            <button class="rating-btn" data-score="3">3점</button>
+                            <button class="rating-btn" data-score="4">4점</button>
+                            <button class="rating-btn" data-score="5">5점</button>
+                        </div>
+                    </div>
+
+                    <div class="rating-section">
+                        <div class="rating-label">유용성 (실용적 도움 정도)</div>
+                        <div class="rating-buttons" data-category="usefulness">
+                            <button class="rating-btn" data-score="1">1점</button>
+                            <button class="rating-btn" data-score="2">2점</button>
+                            <button class="rating-btn" data-score="3">3점</button>
+                            <button class="rating-btn" data-score="4">4점</button>
+                            <button class="rating-btn" data-score="5">5점</button>
+                        </div>
+                    </div>
+
+                    <div class="rating-section">
+                        <div class="rating-label">편리성 (활용의 편리함)</div>
+                        <div class="rating-buttons" data-category="convenience">
+                            <button class="rating-btn" data-score="1">1점</button>
+                            <button class="rating-btn" data-score="2">2점</button>
+                            <button class="rating-btn" data-score="3">3점</button>
+                            <button class="rating-btn" data-score="4">4점</button>
+                            <button class="rating-btn" data-score="5">5점</button>
+                        </div>
+                    </div>
+
+                    <div class="comment-section">
+                        <div class="rating-label">추가 의견 (선택사항)</div>
+                        <textarea class="comment-input" placeholder="답변에 대한 의견이나 개선사항을 입력해주세요..."></textarea>
+                    </div>
+
+                    <div class="evaluation-actions">
+                        <button class="eval-btn submit-eval">평가 제출</button>
+                        <button class="eval-btn skip-eval">건너뛰기</button>
+                    </div>
+                `;
+
+                botMessageDiv.appendChild(evalPanel);
+                
+                this.setupEvaluationEvents(evalPanel, userQuestion, botResponse);
+                
+                setTimeout(() => {
+                    evalPanel.classList.add('show');
+                }, 500);
+            }
+
+            setupEvaluationEvents(evalPanel, userQuestion, botResponse) {
+                const ratings = {};
+                
+                evalPanel.querySelectorAll('.rating-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const category = btn.closest('.rating-buttons').dataset.category;
+                        const score = parseInt(btn.dataset.score);
+                        
+                        btn.closest('.rating-buttons').querySelectorAll('.rating-btn').forEach(b => {
+                            b.classList.remove('selected');
+                        });
+                        
+                        btn.classList.add('selected');
+                        ratings[category] = score;
+                    });
+                });
+
+                evalPanel.querySelector('.submit-eval').addEventListener('click', () => {
+                    const comment = evalPanel.querySelector('.comment-input').value;
+                    this.submitEvaluation(userQuestion, botResponse, ratings, comment);
+                    evalPanel.style.display = 'none';
+                });
+
+                evalPanel.querySelector('.skip-eval').addEventListener('click', () => {
+                    evalPanel.style.display = 'none';
+                });
+            }
+
+            async submitEvaluation(question, answer, ratings, comment) {
+                const ratingValues = Object.values(ratings);
+                const averageRating = ratingValues.length > 0 ? 
+                    ratingValues.reduce((a, b) => a + b, 0) / ratingValues.length : 0;
+
+                const evaluationData = {
+                    timestamp: new Date().toISOString(),
+                    question: question,
+                    answer: answer,
+                    ratings: ratings,
+                    comment: comment,
+                    averageRating: averageRating
+                };
+
+                this.totalEvals++;
+                this.totalRating += averageRating;
+                localStorage.setItem('totalEvals', this.totalEvals.toString());
+                localStorage.setItem('totalRating', this.totalRating.toString());
+                this.updateStats();
+
+                try {
+                    await this.sendToEmail(evaluationData);
+                    this.showNotification('✅ 평가가 성공적으로 제출되었습니다. 연구에 참여해주셔서 감사합니다!', 'success');
+                } catch (error) {
+                    this.showNotification('📧 평가 데이터가 로컬에 저장되었습니다. 네트워크 연결을 확인해주세요.', 'warning');
+                    this.saveEvaluationLocally(evaluationData);
+                }
+            }
+
+            async sendToEmail(data) {
+                const emailData = {
+                    to: 'abc@bigdt.co.kr',
+                    subject: '[재난안전 챗봇] 평가 데이터',
+                    body: `
+                        평가 시간: ${data.timestamp}
+                        질문: ${data.question}
+                        답변: ${data.answer}
+                        
+                        평가 점수:
+                        - 정확성: ${data.ratings.accuracy || 'N/A'}/5
+                        - 유용성: ${data.ratings.usefulness || 'N/A'}/5  
+                        - 편리성: ${data.ratings.convenience || 'N/A'}/5
+                        - 평균: ${data.averageRating.toFixed(1)}/5
+                        
+                        추가 의견: ${data.comment || '없음'}
+                    `
+                };
+
+                console.log('평가 데이터 전송:', emailData);
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+
+            saveEvaluationLocally(data) {
+                const evaluations = JSON.parse(localStorage.getItem('evaluations') || '[]');
+                evaluations.push(data);
+                localStorage.setItem('evaluations', JSON.stringify(evaluations));
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#28a745' : type === 'warning' ? '#ffc107' : '#17a2b8'};
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 10px;
+                    z-index: 1000;
+                    font-size: 0.9rem;
+                    max-width: 300px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.remove();
+                }, 4000);
+            }
+
+            showTyping() {
+                this.typingIndicator.style.display = 'block';
+                this.scrollToBottom();
+            }
+
+            hideTyping() {
+                this.typingIndicator.style.display = 'none';
+                this.sendBtn.disabled = false;
+            }
+
+            async simulateResponse(userMessage, userMessageId) {
+                await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000));
+                
+                this.hideTyping();
+                
+                const response = this.generateResponse(userMessage);
+                const botMessageDiv = this.addMessage(response, 'bot');
+                
+                setTimeout(() => {
+                    this.addEvaluationPanel(botMessageDiv, userMessage, response);
+                }, 1000);
+            }
+
+            generateResponse(message) {
+                const lowerMessage = message.toLowerCase();
+                
+                if (lowerMessage.includes('지진')) {
+                    return `🏢 <strong>지진 발생시 행동요령</strong><br><br>
+                    <strong>실내에서:</strong><br>
+                    • 즉시 책상 아래나 튼튼한 곳으로 피하기<br>
+                    • 문을 열어 출구 확보<br>
+                    • 엘리베이터 사용 금지<br><br>
+                    <strong>실외에서:</strong><br>
+                    • 건물, 전신주 등에서 멀리 떨어지기<br>
+                    • 가방이나 손으로 머리 보호<br><br>
+                    <strong>관련 법령:</strong> 재난 및 안전관리 기본법 제3조`;
+                }
+                
+                if (lowerMessage.includes('화재')) {
+                    return `🔥 <strong>화재 발생시 대피요령</strong><br><br>
+                    <strong>1단계:</strong> 화재 신고 (119)<br>
+                    <strong>2단계:</strong> 초기 진화 시도<br>
+                    <strong>3단계:</strong> 대피 경로 확보<br>
+                    <strong>4단계:</strong> 연기 아래로 몸을 낮춰 대피<br><br>
+                    <strong>주의사항:</strong><br>
+                    • 엘리베이터 사용 금지<br>
+                    • 젖은 수건으로 코와 입 막기<br><br>
+                    <strong>관련 법령:</strong> 소방기본법 제5조`;
+                }
+                
+                if (lowerMessage.includes('태풍') || lowerMessage.includes('폭풍')) {
+                    return `🌪️ <strong>태풍 대비 안전수칙</strong><br><br>
+                    <strong>사전 준비:</strong><br>
+                    • 비상용품 점검 (손전등, 라디오, 식수)<br>
+                    • 창문, 출입문 점검<br>
+                    • 배수구 청소<br><br>
+                    <strong>태풍 중:</strong><br>
+                    • 실내 대기, 외출 금지<br>
+                    • 전기, 가스 차단<br>
+                    • 라디오로 기상정보 청취<br><br>
+                    <strong>관련 법령:</strong> 자연재해대책법 제10조`;
+                }
+                
+                if (lowerMessage.includes('응급') || lowerMessage.includes('신고')) {
+                    return `📞 <strong>응급상황 신고 방법</strong><br><br>
+                    <strong>긴급전화번호:</strong><br>
+                    • 종합상황실: <strong>119</strong><br>
+                    • 경찰서: <strong>112</strong><br>
+                    • 해양경찰: <strong>122</strong><br><br>
+                    <strong>신고시 전달사항:</strong><br>
+                    • 정확한 위치 (주소, 건물명)<br>
+                    • 상황 설명<br>
+                    • 인명피해 여부<br>
+                    • 신고자 연락처<br><br>
+                    <strong>관련 법령:</strong> 응급의료에 관한 법률 제2조`;
+                }
+                
+                return `🤖 <strong>재난안전 정보 안내</strong><br><br>
+                죄송합니다. 해당 질문에 대한 구체적인 정보를 찾지 못했습니다.<br><br>
+                <strong>다음과 같은 주제로 질문해주세요:</strong><br>
+                • 지진, 화재, 태풍 대응요령<br>
+                • 응급상황 신고 방법<br>
+                • 대피소 및 피난 안내<br>
+                • 안전교육 관련 정보<br><br>
+                더 자세한 정보는 <strong>국민재난안전포털(www.safekorea.go.kr)</strong>에서 확인하실 수 있습니다.`;
+            }
+
+            scrollToBottom() {
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new DisasterSafetyChatbot();
+        });
+    </script>
+</body>
+</html>
