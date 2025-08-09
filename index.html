@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>빅데이터기술연구원(주) - AI 핵심 솔루션</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+    body {
+        margin: 0;
+        font-family: 'Noto Sans KR', sans-serif;
+        height: 100vh;
+        background: linear-gradient(270deg, #2b5876, #4e4376, #1e3c72, #2a5298);
+        background-size: 800% 800%;
+        animation: gradientShift 15s ease infinite;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0,0,0,0.2);
+        backdrop-filter: blur(10px);
+        z-index: 10;
+        transition: background 0.3s ease;
+    }
+
+    /* 로고 스타일 추가 */
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .logo-circle {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #0066ff, #00d4ff);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: logoGlow 3s ease-in-out infinite;
+    }
+
+    .logo-text {
+        width: 24px;
+        height: 24px;
+        background: white;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .logo-text::before {
+        content: 'B';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #0066ff;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    @keyframes logoGlow {
+        0%, 100% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
+        50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.8); }
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    /* 챗봇 플로팅 버튼 */
+    .chatbot-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+    }
+
+    .chatbot-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        transition: all 0.3s ease;
+        animation: chatbotPulse 2s infinite;
+        backdrop-filter: blur(10px);
+    }
+
+    .chatbot-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 107, 107, 0.6);
+        color: white;
+        text-decoration: none;
+    }
+
+    .chatbot-btn .icon {
+        font-size: 1.4rem;
+        animation: bounce 1s infinite;
+    }
+
+    .chatbot-btn .text {
+        font-size: 0.9rem;
+        line-height: 1.2;
+    }
+
+    @keyframes chatbotPulse {
+        0% { box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4); }
+        50% { box-shadow: 0 10px 25px rgba(255, 107, 107, 0.7); }
+        100% { box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4); }
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-3px); }
+        60% { transform: translateY(-2px); }
+    }
+
+    .hero {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    /* 밑줄 제거 */
+    .hero h2, .hero p {
+        text-decoration: none;
+    }
+
+    /* 글자 떠오르는 효과 */
+    .hero h2 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(90deg, #ffffff, #87CEEB, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: titleGlow 5s ease-in-out infinite, fadeUp 1.5s ease-out forwards;
+        opacity: 0;
+    }
+
+    @keyframes titleGlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    @keyframes fadeUp {
+        0% { transform: translateY(30px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* 핵심 반짝임 효과 */
+    @keyframes shine {
+        0% { color: #87CEEB; text-shadow: 0 0 5px #87CEEB; }
+        50% { color: #ffffff; text-shadow: 0 0 15px #87CEEB, 0 0 25px #87CEEB; }
+        100% { color: #87CEEB; text-shadow: 0 0 5px #87CEEB; }
+    }
+    .hero h2 span {
+        color: red; /* 글자색 빨간색 */
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+        animation: fadeUp 1.5s ease-out 0.5s forwards;
+        opacity: 0;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+        animation: fadeUp 1.5s ease-out 1s forwards;
+        opacity: 0;
+    }
+
+    .cta-button {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.5);
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        text-decoration: none;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .cta-button:hover {
+        background: rgba(255,255,255,0.3);
+        border-color: #87CEEB;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+    }
+
+    footer {
+        text-align: center;
+        padding: 1rem;
+        font-size: 1rem;
+        background: rgba(0,0,0,0.3);
+        backdrop-filter: blur(8px);
+    }
+
+    footer a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    footer a:hover {
+        color: #87CEEB;
+    }
+
+    @media (max-width: 480px) {
+        .hero h2 {
+            font-size: 2rem;
+        }
+        .hero p {
+            font-size: 1rem;
+        }
+        .cta-button {
+            font-size: 0.9rem;
+            padding: 0.4rem 1rem;
+        }
+        
+        .chatbot-float {
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        .chatbot-btn {
+            padding: 12px 18px;
+            font-size: 0.9rem;
+        }
+        
+        .chatbot-btn .text {
+            font-size: 0.8rem;
+        }
+        
+        .logo-circle {
+            width: 35px;
+            height: 35px;
+        }
+        
+        .logo-text {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .logo-text::before {
+            font-size: 12px;
+        }
+        
+        header h1 {
+            font-size: 1rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-circle">
+            <div class="logo-text"></div>
+        </div>
+        <h1>빅데이터기술연구원(주)</h1>
+    </div>
+</header>
+
+<div class="hero">
+    <h2>AI <span>핵심</span> 솔루션</h2>
+    <p>고객은 핵심 기능에 반응합니다</p>
+    <div class="button-group">
+        <a href="catalog.html" class="cta-button">카탈로그</a>
+        <a href="download.html" class="cta-button">MVP뷰</a>
+    </div>
+</div>
+
+<!-- 챗봇 플로팅 버튼 -->
+<div class="chatbot-float">
+    <a href="chatbot.html" class="chatbot-btn">
+        <span class="icon">🤖</span>
+        <span class="text">재난안전<br>챗봇</span>
+    </a>
+</div>
+
+<footer>
+    MVP 상담: <a href="tel:010-5234-3535">010-5234-3535</a>
+</footer>
+
+<script>
+let startX = 0, endX = 0;
+document.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+document.addEventListener("touchend", e => {
+    endX = e.changedTouches[0].clientX;
+    let diffX = startX - endX;
+    if (diffX > 50) window.location.href = "catalog.html";
+    else if (diffX < -50) window.location.href = "download.html";
+});
+</script>
+
+</body>
+</html>
